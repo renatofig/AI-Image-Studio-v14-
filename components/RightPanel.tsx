@@ -378,7 +378,7 @@ const CropBox: React.FC<{
             const dx = (e.clientX - opRef.current.startX) / parentRect.width * 100;
             const dy = (e.clientY - opRef.current.startY) / parentRect.height * 100;
             
-            setCropState(prev => {
+            setCropState(() => {
                 let { x, y, width, height } = opRef.current!.startState;
                 
                 if (opRef.current!.type === 'move') {
@@ -478,7 +478,7 @@ const videoLoadingMessages = [
 ];
 
 const ExpandIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
         <path d="M3 7V5a2 2 0 0 1 2-2h2" />
         <path d="M17 3h2a2 2 0 0 1 2 2v2" />
         <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
@@ -487,7 +487,7 @@ const ExpandIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const CompareIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
         <circle cx="12" cy="12" r="10" />
         <path d="M12 2v20" />
         <path d="M12 2a10 10 0 1 0 0 20" />
@@ -499,7 +499,6 @@ interface RightPanelProps {
   generatedImages: string[] | null;
   generatedVideoUrl: string | null;
   comparisonImage: string | null;
-  originalImage: ImageFile | null;
   error: string | null;
   onUseAsBaseForAI: (image: string) => void;
   onNewImage: () => void;
@@ -526,7 +525,7 @@ interface RightPanelProps {
 }
 
 export const RightPanel: React.FC<RightPanelProps> = ({ 
-  isLoading, generatedImages, generatedVideoUrl, comparisonImage, originalImage, error, onUseAsBaseForAI, onNewImage, onSave, onOpenGallery, onToggleComparator, setIsDraggingFromGallery,
+  isLoading, generatedImages, generatedVideoUrl, comparisonImage, error, onUseAsBaseForAI, onNewImage, onSave, onOpenGallery, onToggleComparator, setIsDraggingFromGallery,
   mode, editFunction, textOverlay, setTextOverlay, maskState, setMaskState, isMaskingActive, cropState, setCropState, isCropping,
   selectedIndex, onSelectIndex, generationProgress, prompt, showComparator: showComparatorProp, t
 }) => {

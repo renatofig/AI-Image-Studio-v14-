@@ -683,14 +683,14 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
           </div>
         )}
         
-        {mode === AppMode.EDIT && editFunction === EditFunction.MASK_EDIT && image1 && (
+        {mode === AppMode.EDIT && editFunction === EditFunction.MASK_EDIT && (
             <div className="animate-fade-in flex flex-col gap-3">
               {ui.isCropping ? (
                  <Accordion title={t('cropImage')} id="edit_crop" isOpen={true} onToggle={() => {}}>
                     <div className="space-y-3">
                         <p className="text-sm text-slate-400">{t('cropImageHelp')}</p>
                         <div className="grid grid-cols-2 gap-3">
-                            <button onClick={onApplyCrop} disabled={isLoading} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg">{t('applyCrop')}</button>
+                            <button onClick={onApplyCrop} disabled={isLoading || !image1} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg disabled:opacity-50">{t('applyCrop')}</button>
                             <button onClick={() => setAppState(s => ({...s, ui: {...s.ui, isCropping: false}}))} className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded-lg">{t('cancel')}</button>
                         </div>
                     </div>
@@ -714,7 +714,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
 
                     {isMaskingActive && (
                     <Accordion title={t('maskingTools')} id="edit_masking" isOpen={ui.openSections.edit_masking} onToggle={handleToggleSection}>
-                        <div className="space-y-4">
+                        <fieldset disabled={!image1} className="space-y-4 disabled:opacity-50 disabled:cursor-not-allowed">
                             <div className="flex flex-col gap-2">
                                 <div className="flex justify-between items-center">
                                     <label htmlFor="brushSize" className="font-medium text-slate-400 text-sm">{t('brushSize')}</label>
@@ -732,20 +732,21 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <button onClick={() => setMask(m => ({...m, mode: 'draw'}))} className={`p-2 rounded-lg text-sm transition-colors ${mask.mode === 'draw' ? 'bg-banana-500 text-slate-900' : 'bg-slate-700 hover:bg-slate-600'}`} title={t('drawMaskTooltip')}>{t('draw')}</button>
-                                <button onClick={() => setMask(m => ({...m, mode: 'erase'}))} className={`p-2 rounded-lg text-sm transition-colors ${mask.mode === 'erase' ? 'bg-banana-500 text-slate-900' : 'bg-slate-700 hover:bg-slate-600'}`} title={t('eraseMaskTooltip')}>{t('erase')}</button>
+                                <button type="button" onClick={() => setMask(m => ({...m, mode: 'draw'}))} className={`p-2 rounded-lg text-sm transition-colors ${mask.mode === 'draw' ? 'bg-banana-500 text-slate-900' : 'bg-slate-700 hover:bg-slate-600'}`} title={t('drawMaskTooltip')}>{t('draw')}</button>
+                                <button type="button" onClick={() => setMask(m => ({...m, mode: 'erase'}))} className={`p-2 rounded-lg text-sm transition-colors ${mask.mode === 'erase' ? 'bg-banana-500 text-slate-900' : 'bg-slate-700 hover:bg-slate-600'}`} title={t('eraseMaskTooltip')}>{t('erase')}</button>
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <button onClick={() => setMask(m => ({...m, image: null}))} className="p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg">{t('clearMask')}</button>
-                                <button onClick={() => onInvertMask()} className="p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg">{t('invertMask')}</button>
+                                <button type="button" onClick={() => setMask(m => ({...m, image: null}))} className="p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg">{t('clearMask')}</button>
+                                <button type="button" onClick={() => onInvertMask()} className="p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg">{t('invertMask')}</button>
                             </div>
-                        </div>
+                        </fieldset>
                     </Accordion>
                     )}
                     <div className="pt-3 mt-3 border-t border-slate-700/50">
                         <button
                             onClick={() => setAppState(s => ({...s, ui: {...s.ui, isCropping: true}}))}
-                            className="w-full text-center p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg"
+                            className="w-full text-center p-2 bg-slate-700 hover:bg-slate-600 text-sm rounded-lg disabled:opacity-50"
+                            disabled={!image1}
                         >
                             ✂️ {t('cropImage')}
                         </button>
@@ -846,7 +847,7 @@ const LeftPanel: React.FC<LeftPanelProps> = ({
               </div>
             </Accordion>
 
-            <Accordion title={t('controlBalance')} id="render_controls" isOpen={ui.openSections.render_controls} onToggle={handleToggleSection}>
+            <Accordion title={t('controlBalanceSectionTitle')} id="render_controls" isOpen={ui.openSections.render_controls} onToggle={handleToggleSection}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="flex flex-col gap-2 justify-center">
                         <div className="flex justify-between items-center">

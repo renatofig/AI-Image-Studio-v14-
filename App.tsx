@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { AppMode, CreateFunction, EditFunction, ImageFile, AspectRatio, ImageFilter, GalleryImage, RenderInputType, AppState, CropState } from './types';
+import { AppMode, CreateFunction, EditFunction, ImageFile, AspectRatio, ImageFilter, GalleryImage, RenderInputType, AppState } from './types';
 import LeftPanel from './components/LeftPanel';
 // FIX: Changed import to a named import as RightPanel is not a default export.
 import { RightPanel } from './components/RightPanel';
@@ -154,9 +154,10 @@ const translations = {
     floorPlan: 'Planta Baixa',
     renderPresets: 'Presets de Renderização',
     controlBalance: 'Balanço de Controle',
+    controlBalanceSectionTitle: "Controle e Marca d'água",
     maxCreativity: 'Criatividade Máxima',
     maxFidelity: 'Fidelidade Máxima',
-    addWatermark: "Adicionar marca d'água",
+    addWatermark: "Marca d'água",
     // Video
     startImage: '🎬 Imagem de Início (Opcional)',
     uploadImage: 'Cole, clique ou arraste a imagem',
@@ -444,6 +445,7 @@ const translations = {
     floorPlan: 'Floor Plan',
     renderPresets: 'Render Presets',
     controlBalance: 'Control Balance',
+    controlBalanceSectionTitle: "Control & Watermark",
     maxCreativity: 'Maximum Creativity',
     maxFidelity: 'Maximum Fidelity',
     addWatermark: 'Add watermark',
@@ -800,7 +802,7 @@ const App: React.FC = () => {
   // --- Language State ---
   const [language, setLanguage] = useState<Language>('pt');
   const t = useCallback((key: string, ...args: any[]): string => {
-    const string = (translations[language] as any)[key] || key;
+    let string = (translations[language] as any)[key] || (translations.pt as any)[key] || key;
     if (typeof string === 'function') {
       return string.apply(null, args);
     }
@@ -1807,7 +1809,6 @@ const handleCreateVideoFromGalleryImage = useCallback((base64Image: string) => {
             generatedImages={appState.generatedImages}
             generatedVideoUrl={appState.generatedVideoUrl}
             comparisonImage={appState.comparisonImage}
-            originalImage={appState.originalImage1}
             error={error}
             onUseAsBaseForAI={handleUseAsBaseForAI}
             onNewImage={handleNewImage}
