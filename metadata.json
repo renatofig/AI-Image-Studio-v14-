@@ -1,0 +1,5 @@
+{
+  "name": "AI Image Studio v14 editar e cortar",
+  "description": "A professional image generator and editor using AI. Create new images from prompts or edit existing ones with powerful tools using Google's Gemini API.",
+  "requestFramePermissions": []
+}
