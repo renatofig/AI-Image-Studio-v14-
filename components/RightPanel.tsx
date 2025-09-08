@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { AppMode, EditFunction, ImageFile, CropState } from '../types';
+import { AppMode, EditFunction, CropState } from '../types';
 import { TextOverlayState, MaskState } from '../types';
 import MaskingCanvas from './MaskingCanvas';
 
